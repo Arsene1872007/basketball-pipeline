@@ -4,7 +4,7 @@ def delete_empty(df):
     missing_values = df.isnull().sum().sum()
 
     #deletes the missing values
-    clean_data=df.dropna()
+    clean_data=df.dropna(subset=["PTS","Team","Player","Season"] )
     print("There is a total of ", missing_values, " missing values in this dataset")
     return clean_data
 
