@@ -4,43 +4,23 @@ def delete_empty(df):
     missing_values = df.isnull().sum().sum()
 
     #deletes the missing values
-    clean_data=df.dropna(subset=["PTS","Team","Player","Season"] )
+    clean_data=df.dropna(subset=["PTS","FGA","STL","REB","W","L"])
     print("There is a total of ", missing_values, " missing values in this dataset")
     return clean_data
 
-#------filters data based on users choice----
-def filter_data(df):
-    print("1.only players with PTS > X")
-    print("2.only one team")
-    print("3.only one season")
-    try:
-        choice = int(input("pick 1-3:"))
-        
-        if (choice == 1 ):
-            X=int(input("state the minimum point you want: "))
-            filtered_df = df[df["PTS"] > X]
-            return filtered_df
-                
-        elif (choice == 2 ):
-            team = input("enter team name:")
-            filtered_df = df[df["Team"] == team]
-            return filtered_df
-            
-        elif (choice == 3 ):
-            season = input("enter the season:")
-            filtered_df = df[df["Season"] == season]
-            return filtered_df
-    except Exception as e:
-        print("Invalid input:",e)
-        return df
 
-#------Create new column based on existing ones----     
-def create_column(df):
-    new_column_name = input("enter a name for the new column: ")
-    expression = input("enter an expression for the new column: ")
-    try:
-        df[new_column_name] = df.eval(expression)
-        return df
-    except Exception as e:
-        print("creating the new column failed:",e)
-    return df
+def get_shooting_stats(df):
+    shooting=df[['TEAM_NAME','FGM', 'FGA','FG_PCT', 'FG3M', 'FG3A', 'FG3_PCT', 'FTM', 'FTA', 'FT_PCT','PTS']]
+    return shooting
+
+def get_defensive_stats(df):
+    defense=df[['TEAM_NAME','OREB','DREB', 'REB', 'AST', 'TOV','STL', 'BLK', 'BLKA','PF']]
+    
+    return defense
+def get_performance(df):
+    performmance=df[['TEAM_NAME','W', 'L','W_PCT','PLUS_MINUS','GP_RANK', 'W_RANK', 'L_RANK', 'W_PCT_RANK', 'MIN_RANK',
+       'FGM_RANK', 'FGA_RANK', 'FG_PCT_RANK', 'FG3M_RANK', 'FG3A_RANK',
+       'FG3_PCT_RANK', 'FTM_RANK', 'FTA_RANK', 'FT_PCT_RANK', 'OREB_RANK',
+       'DREB_RANK', 'REB_RANK', 'AST_RANK', 'TOV_RANK', 'STL_RANK', 'BLK_RANK',
+       'BLKA_RANK', 'PF_RANK', 'PFD_RANK', 'PTS_RANK', 'PLUS_MINUS_RANK']]
+    return performmance

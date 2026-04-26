@@ -1,6 +1,17 @@
 import pandas as pd
+from nba_api.stats.endpoints import leaguedashteamstats
 
-#------loading csv-----
+#endpoint object with season parameter
+
+
+
+#-----extract data from api-----
 def extract_data():
-    df = pd.read_csv("players_stats_by_season_full_details.csv")
+    
+    endpoint=leaguedashteamstats.LeagueDashTeamStats(season="2024-25")#endpoint obect with season parameter
+    df = endpoint.get_data_frames()[0]
+    
+   
+    
     return df
+    
