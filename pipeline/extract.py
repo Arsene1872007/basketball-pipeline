@@ -9,7 +9,7 @@ from nba_api.stats.endpoints import leaguedashteamstats
 def extract_data():
     
     endpoint=leaguedashteamstats.LeagueDashTeamStats(season="2024-25")#endpoint obect with season parameter
-    df = endpoint.get_data_frames()[0]
+    df = endpoint.get_data_frames()[0]#gets the first dataframe from the list
     
    
     
