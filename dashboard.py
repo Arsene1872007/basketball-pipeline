@@ -1,7 +1,12 @@
+import streamlit as st
 import pandas as pd
 from sqlalchemy import create_engine
 
 engine=create_engine("sqlite:///basketball.db")
+
+st.title("MY DASHBOARD")
+
+st.header("DEFENSIVE STATS")
 
 #-----TEAMS defensive stats ranked from best
 querry1="""
@@ -10,9 +15,13 @@ querry1="""
     ORDER BY combined_defense DESC
   
 """
-print("Defense stats ranked from best")
+
 df1=pd.read_sql(querry1,engine)
-print(df1)
+st.dataframe(df1)
+st.bar_chart(df1)
+st.text(" stats showing teams defensive caoabilities ranked from best based on the total steals and blocks ")
+
+st.header("ABOVE AVERAGE WIN PERCENTAGE")
 
 querry2="""
     SELECT p.TEAM_NAME,s.PTS,p.W_PCT
@@ -22,15 +31,22 @@ querry2="""
     ORDER BY W_PCT DESC
     
 """
-print("Teams with above average win percentage")
-df2=pd.read_sql(querry2,engine)
-print(df2)
 
+df2=pd.read_sql(querry2,engine)
+st.dataframe(df2)
+st.text("shows teams with a above average win probability based on point and their win percentage")
+
+
+st.header("SHOOTING PROFICIENCY")
 querry3="""
     SELECT TEAM_NAME, FG_PCT, FG3_PCT, FT_PCT 
     FROM shooting
     ORDER BY FG_PCT DESC
 """
-print("shooting proficiency")
+
 df3=pd.read_sql(querry3,engine)
-print(df3)
+st.dataframe(df3)
+st.bar_chart(df3)
+st.text("shows shooting proficincy based on their field goal percentage ")
+
+
