@@ -1,8 +1,20 @@
+
 # Basketball Data Pipeline
 
-An end-to-end data pipeline that pulls live NBA team stats from the NBA API, 
-cleans and transforms the data, stores it in a SQLite database, 
+An end-to-end data pipeline that pulls live NBA team stats from the NBA API,
+cleans and transforms the data, stores it in a SQLite database,
 and visualizes it through a Streamlit dashboard.
+
+## Why I Built This
+
+I wanted to understand what actually separates winning teams from losing 
+ones beyond just looking at the scoreboard. This pipeline pulls real NBA 
+team stats and breaks them down into shooting efficiency, defensive 
+performance, and win percentage  so you can see which teams win through 
+defense, which win through scoring, and which are overperforming or 
+underperforming relative to their stats. It started as a way to practice 
+data engineering fundamentals, but it ended up being a genuinely useful 
+way to explore what drives winning in the NBA.
 
 ## Project Structure
 project1/
