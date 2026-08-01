@@ -49,7 +49,6 @@ try:
     df3=pd.read_sql(query3,engine)
     st.dataframe(df3)
     st.bar_chart(df3.set_index("TEAM_NAME"))
-    st.bar_chart(df3)
 
     st.text("shows shooting proficiency based on their field goal percentage ")
 

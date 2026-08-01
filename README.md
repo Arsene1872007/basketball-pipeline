@@ -7,17 +7,31 @@ and visualizes it through a Streamlit dashboard.
 
 ## Why I Built This
 
-I wanted to understand what actually separates winning teams from losing 
-ones beyond just looking at the scoreboard. This pipeline pulls real NBA 
-team stats and breaks them down into shooting efficiency, defensive 
-performance, and win percentage  so you can see which teams win through 
-defense, which win through scoring, and which are overperforming or 
-underperforming relative to their stats. It started as a way to practice 
-data engineering fundamentals, but it ended up being a genuinely useful 
+I wanted to understand what actually separates winning teams from losing
+ones beyond just looking at the scoreboard. This pipeline pulls real NBA
+team stats and breaks them down into shooting efficiency, defensive
+performance, and win percentage so you can see which teams win through
+defense, which win through scoring, and which are overperforming or
+underperforming relative to their stats. It started as a way to practice
+data engineering fundamentals, but it ended up being a genuinely useful
 way to explore what drives winning in the NBA.
 
 ## Project Structure
-Minimal ETL pipeline for scraping basic NBA team stats, transforming them, and loading into a SQLite database.
+
+```
+basketball d_pipeline/
+├── main.py           # orchestrator and scheduler guard
+├── dashboard.py       # Streamlit dashboard
+├── querries.py         # analytical SQL queries
+├── requirements.txt   # project dependencies
+├── pipeline/
+│   ├── extract.py     # pulls data from the NBA API
+│   ├── transform.py   # cleans and splits data into shooting/defensive/performance
+│   └── load.py        # writes to SQLite in a single transaction
+└── tests/
+    ├── smoke_test.py   # manual end-to-end sanity check
+    └── test_pipeline.py # pytest suite
+```
 
 ## Requirements
 
@@ -29,68 +43,44 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-Notes: `requirements.txt` lists the minimal packages used by this project: `pandas`, `SQLAlchemy`, `schedule`, `nba_api`, `streamlit`, and `pytest`.
+`requirements.txt` lists the packages used by this project: `pandas`, `SQLAlchemy`, `schedule`, `nba_api`, `streamlit`, and `pytest`.
 
-## Run the pipeline
+## Usage
 
-Run the pipeline script directly. The scheduler loop in `main.py` is guarded so imports won't run the scheduler when the package is imported.
+**1. Run the pipeline** — pulls live data and (re)creates `basketball.db` locally:
 
 ```powershell
 python main.py
 ```
 
-`main.py` calls `run_pipeline()` once at startup and (when run as a script) keeps a scheduler loop to run periodically.
+`main.py` calls `run_pipeline()` once at startup and, when run as a script, keeps a scheduler loop running to refresh the data daily. `basketball.db` isn't committed to the repo (it's a generated artifact, listed in `.gitignore`) — this step creates it from scratch on your machine.
+
+**2. View the dashboard** — reads from `basketball.db`, so run the pipeline at least once first:
+
+```powershell
+streamlit run dashboard.py
+```
+
+This opens automatically in your default browser at `http://localhost:8501` (also printed in the terminal).
 
 ## Tests
 
-Run the pytest suite (uses an in-memory SQLite DB for isolation):
+Run the pytest suite (uses an in-memory SQLite DB for isolation, so it never touches your real `basketball.db`):
 
 ```powershell
 pytest -q
 ```
 
-## Files
+## Dashboard
 
-- `main.py` — orchestrator and scheduler guard.
-- `pipeline/extract.py` — calls `nba_api` and returns a DataFrame; includes basic validation.
-- `pipeline/transform.py` — simple cleaning and selection of columns.
-- `pipeline/load.py` — transactional writes using SQLAlchemy `engine.begin()`.
-- `tests/` — smoke and pytest test to validate basic pipeline flow.
+- **Defensive Stats** — teams ranked by combined steals and blocks
+- **Above Average Win Percentage** — teams with win percentage above the league average
+- **Shooting Proficiency** — teams ranked by field goal percentage
 
 ## Notes & Troubleshooting
 
 - If the editor reports "Import 'schedule' could not be resolved", install packages from `requirements.txt` and reload the editor's Python interpreter.
-- The database used by default is `basketball.db` (SQLite). For tests we use `sqlite:///:memory:` to avoid side effects.
-
-If you'd like the README expanded with examples, diagrams, or pinned dependency versions, tell me which part to expand.
-project1/
-├── main.py          # runs the full pipeline
-├── dashboard.py     # Streamlit dashboard
-├── queries.py       # analytical SQL queries
-├── requirements.txt # project dependencies
-└── pipeline/
-    ├── extract.py   # pulls data from NBA API
-    ├── transform.py # cleans and splits data
-    └── load.py      # saves to SQLite database
-
-## Installation
-
-Install all dependencies with:
-pip install -r requirements.txt
-
-## How to Run
-
-### Run the pipeline
-python main.py
-
-### View the dashboard
-streamlit run dashboard.py
-
-## Dashboard
-
-- **Defensive Stats** — teams ranked by combined steals and blocks
-- **Win Percentage** — teams with above average win percentage
-- **Shooting Efficiency** — teams ranked by field goal percentage
+- The database used by default is `basketball.db` (SQLite). Tests use `sqlite:///:memory:` to avoid side effects.
 
 ## What I Learned
 
