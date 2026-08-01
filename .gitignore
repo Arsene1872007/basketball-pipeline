@@ -1,2 +1,4 @@
-players_stats_by_season_full_details.csv 
 .env
+basketball.db
+__pycache__/
+*.pyc

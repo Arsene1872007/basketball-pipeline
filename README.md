@@ -5,6 +5,52 @@ cleans and transforms the data, stores it in a SQLite database,
 and visualizes it through a Streamlit dashboard.
 
 ## Project Structure
+Minimal ETL pipeline for scraping basic NBA team stats, transforming them, and loading into a SQLite database.
+
+## Requirements
+
+Install the runtime dependencies (prefer a virtual environment):
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+Notes: `requirements.txt` lists the minimal packages used by this project: `pandas`, `SQLAlchemy`, `schedule`, `nba_api`, `streamlit`, and `pytest`.
+
+## Run the pipeline
+
+Run the pipeline script directly. The scheduler loop in `main.py` is guarded so imports won't run the scheduler when the package is imported.
+
+```powershell
+python main.py
+```
+
+`main.py` calls `run_pipeline()` once at startup and (when run as a script) keeps a scheduler loop to run periodically.
+
+## Tests
+
+Run the pytest suite (uses an in-memory SQLite DB for isolation):
+
+```powershell
+pytest -q
+```
+
+## Files
+
+- `main.py` — orchestrator and scheduler guard.
+- `pipeline/extract.py` — calls `nba_api` and returns a DataFrame; includes basic validation.
+- `pipeline/transform.py` — simple cleaning and selection of columns.
+- `pipeline/load.py` — transactional writes using SQLAlchemy `engine.begin()`.
+- `tests/` — smoke and pytest test to validate basic pipeline flow.
+
+## Notes & Troubleshooting
+
+- If the editor reports "Import 'schedule' could not be resolved", install packages from `requirements.txt` and reload the editor's Python interpreter.
+- The database used by default is `basketball.db` (SQLite). For tests we use `sqlite:///:memory:` to avoid side effects.
+
+If you'd like the README expanded with examples, diagrams, or pinned dependency versions, tell me which part to expand.
 project1/
 ├── main.py          # runs the full pipeline
 ├── dashboard.py     # Streamlit dashboard

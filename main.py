@@ -17,7 +17,7 @@ def run_pipeline():
 if __name__ == "__main__":
   schedule.every().day.at("08:00").do(run_pipeline)
   run_pipeline()
-while True:
-    schedule.run_pending()#checks if any scheduled jobs are due at the moment
-    time.sleep(60)
-       
+  while True:
+      schedule.run_pending()  # checks if any scheduled jobs are due at the moment
+      time.sleep(60)
+
