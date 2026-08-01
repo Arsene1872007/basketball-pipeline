@@ -21,7 +21,7 @@ try:
     st.bar_chart(df1.set_index("TEAM_NAME"))
 
 
-    st.text(" stats showing teams defensive caoabilities ranked from best based on the total steals and blocks ")
+    st.text(" stats showing teams defensive capabilities ranked from best based on the total steals and blocks ")
 
     st.header("ABOVE AVERAGE WIN PERCENTAGE")
 
@@ -54,4 +54,4 @@ try:
     st.text("shows shooting proficiency based on their field goal percentage ")
 
 except Exception as e:
-    print("code didnt run due to:",e)
+    st.error(f"Dashboard failed to load: {e}")
