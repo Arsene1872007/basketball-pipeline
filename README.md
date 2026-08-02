@@ -43,19 +43,21 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
+The venv is optional `pip install -r requirements.txt` on its own works fine too, just without the isolation from other Python projects on your machine.
+
 `requirements.txt` lists the packages used by this project: `pandas`, `SQLAlchemy`, `schedule`, `nba_api`, `streamlit`, and `pytest`.
 
 ## Usage
 
-**1. Run the pipeline** — pulls live data and (re)creates `basketball.db` locally:
+**1. Run the pipeline**  pulls live data and (re)creates `basketball.db` locally:
 
 ```powershell
 python main.py
 ```
 
-`main.py` calls `run_pipeline()` once at startup and, when run as a script, keeps a scheduler loop running to refresh the data daily. `basketball.db` isn't committed to the repo (it's a generated artifact, listed in `.gitignore`) — this step creates it from scratch on your machine.
+`main.py` calls `run_pipeline()` once at startup and, when run as a script, keeps a scheduler loop running to refresh the data daily. `basketball.db` isn't committed to the repo (it's a generated artifact, listed in `.gitignore`) this step creates it from scratch on your machine.
 
-**2. View the dashboard** — reads from `basketball.db`, so run the pipeline at least once first:
+**2. View the dashboard**  reads from `basketball.db`, so run the pipeline at least once first:
 
 ```powershell
 streamlit run dashboard.py
@@ -73,9 +75,9 @@ pytest -q
 
 ## Dashboard
 
-- **Defensive Stats** — teams ranked by combined steals and blocks
-- **Above Average Win Percentage** — teams with win percentage above the league average
-- **Shooting Proficiency** — teams ranked by field goal percentage
+- **Defensive Stats**  teams ranked by combined steals and blocks
+- **Above Average Win Percentage**  teams with win percentage above the league average
+- **Shooting Proficiency**  teams ranked by field goal percentage
 
 ## Notes & Troubleshooting
 
@@ -88,7 +90,7 @@ pytest -q
 - How to pull live data from a public API
 - How to clean, transform, and split data into multiple tables
 - How to store data using SQLite and SQLAlchemy
-- Why SQLAlchemy matters — it makes switching between databases easy
-- Basic to intermediate SQL — SELECT, JOIN, subqueries, aggregations
+- Why SQLAlchemy matters it makes switching between databases easy
+- Basic to intermediate SQL  SELECT, JOIN, subqueries, aggregations
 - How to schedule automated pipeline runs
 - How to build an interactive dashboard with Streamlit
