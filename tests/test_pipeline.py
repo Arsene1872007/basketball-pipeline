@@ -1,6 +1,11 @@
 import pandas as pd
 
-from pipeline.transform import delete_empty, get_shooting_stats, get_defensive_stats, get_performance
+from pipeline.transform import (
+    delete_empty,
+    get_shooting_stats,
+    get_defensive_stats,
+    get_performance,
+)
 from pipeline.load import load_data
 
 
@@ -76,4 +81,6 @@ def test_transform_and_load():
     assert "W" in performance.columns
 
     # write to in-memory DB should return True
-    assert load_data(shooting, defense, performance, db_url="sqlite:///:memory:") is True
+    assert (
+        load_data(shooting, defense, performance, db_url="sqlite:///:memory:") is True
+    )

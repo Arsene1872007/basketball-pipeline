@@ -10,7 +10,9 @@ def extract_data(season: str = "2024-25") -> pd.DataFrame:
         endpoint = leaguedashteamstats.LeagueDashTeamStats(season=season)
         frames = endpoint.get_data_frames()
     except Exception as exc:
-        raise RuntimeError(f"NBA API extraction failed for season {season}: {exc}") from exc
+        raise RuntimeError(
+            f"NBA API extraction failed for season {season}: {exc}"
+        ) from exc
 
     if not frames:
         raise ValueError(f"NBA API returned no data frames for season {season}")
@@ -20,4 +22,3 @@ def extract_data(season: str = "2024-25") -> pd.DataFrame:
         raise TypeError("Expected the NBA API endpoint to return a pandas DataFrame")
 
     return df
-    

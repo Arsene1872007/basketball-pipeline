@@ -1,6 +1,11 @@
 import pandas as pd
 
-from pipeline.transform import delete_empty, get_shooting_stats, get_defensive_stats, get_performance
+from pipeline.transform import (
+    delete_empty,
+    get_shooting_stats,
+    get_defensive_stats,
+    get_performance,
+)
 from pipeline.load import load_data
 
 

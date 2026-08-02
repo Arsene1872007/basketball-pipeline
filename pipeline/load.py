@@ -3,14 +3,23 @@ from sqlalchemy.exc import SQLAlchemyError
 import pandas as pd
 
 
-def load_data(shooting: pd.DataFrame, defense: pd.DataFrame, performance: pd.DataFrame, db_url: str = "sqlite:///basketball.db") -> bool:
+def load_data(
+    shooting: pd.DataFrame,
+    defense: pd.DataFrame,
+    performance: pd.DataFrame,
+    db_url: str = "sqlite:///basketball.db",
+) -> bool:
     """Write the three dataframes to the database in a single transaction.
 
     Raises a TypeError if inputs are not DataFrames and RuntimeError on DB failures.
     Returns True on success.
     """
     # validate inputs
-    for name, df in (("shooting", shooting), ("defense", defense), ("performance", performance)):
+    for name, df in (
+        ("shooting", shooting),
+        ("defense", defense),
+        ("performance", performance),
+    ):
         if not isinstance(df, pd.DataFrame):
             raise TypeError(f"{name} must be a pandas DataFrame")
 
